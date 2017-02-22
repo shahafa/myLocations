@@ -1,5 +1,5 @@
 {
-  "name": "welldone",
+  "name": "my-locations",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -15,8 +15,10 @@
   },
   "dependencies": {
     "material-ui": "^0.17.0",
+    "node-uuid": "^1.4.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-google-maps": "beta",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "react-tap-event-plugin": "^2.0.1",

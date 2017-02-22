@@ -3,29 +3,21 @@ import DevTools from './DevTools';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const styles = {
-  container: {
-    display: 'flex',
-    minHeight: '100vh',
-    flexDirection: 'column',
-  },
-
-  content: {
-    flex: '1',
-  },
-};
-
 const developmentMode = process.env.NODE_ENV === 'development';
 
 const App = ({ children }) => (
-  <div style={styles.container}>
-    <Header />
+  <div>
+    <header className="header">
+      <Header />
+    </header>
 
-    <div style={styles.content}>
+    <main className="contentHeight">
       {children}
-    </div>
+    </main>
 
-    <Footer />
+    <footer className="footer">
+      <Footer page={children} />
+    </footer>
 
     {developmentMode &&
       <DevTools />
