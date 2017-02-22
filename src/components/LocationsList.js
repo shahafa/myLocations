@@ -177,39 +177,40 @@ class LocationsList extends Component {
           </div>
         }
 
-        <div style={styles.locationList} className="locationsListHeight">
-          <List>
-            {groupBy ?
-              categories.map(category =>
-                <div key={category}>
-                  <Subheader>{category}</Subheader>
-                  {locations.filter(location => location.category === category)
-                            .map(location =>
-                              <LocationItem
-                                key={location.id}
-                                showCategory={false}
-                                location={location}
-                                selectLocation={selectLocation}
-                                onEditClick={this.onEditClick}
-                                onDeleteClick={this.onDeleteClick}
-                              />)
-                  }
-                  {category !== categories[categories.length - 1] && <Divider />}
-                </div>)
-              :
-              locations.map(location =>
-                <LocationItem
-                  key={location.id}
-                  showCategory
-                  location={location}
-                  selectLocation={selectLocation}
-                  onEditClick={this.onEditClick}
-                  onDeleteClick={this.onDeleteClick}
-                />)
-            }
-          </List>
-        </div>
-
+        {locations.length !== 0 &&
+          <div style={styles.locationList} className="locationsListHeight">
+            <List>
+              {groupBy ?
+                categories.map(category =>
+                  <div key={category}>
+                    <Subheader>{category}</Subheader>
+                    {locations.filter(location => location.category === category)
+                              .map(location =>
+                                <LocationItem
+                                  key={location.id}
+                                  showCategory={false}
+                                  location={location}
+                                  selectLocation={selectLocation}
+                                  onEditClick={this.onEditClick}
+                                  onDeleteClick={this.onDeleteClick}
+                                />)
+                    }
+                    {category !== categories[categories.length - 1] && <Divider />}
+                  </div>)
+                :
+                locations.map(location =>
+                  <LocationItem
+                    key={location.id}
+                    showCategory
+                    location={location}
+                    selectLocation={selectLocation}
+                    onEditClick={this.onEditClick}
+                    onDeleteClick={this.onDeleteClick}
+                  />)
+              }
+            </List>
+          </div>
+        }
         <AddLocationContainer
           open={addLocationOpen}
           onBack={this.onAddLocationClose}
