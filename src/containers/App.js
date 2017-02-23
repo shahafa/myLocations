@@ -16,7 +16,7 @@ const App = ({ children }) => (
     </main>
 
     <footer className="footer">
-      <FooterContainer page={children} />
+      <FooterContainer />
     </footer>
 
     {developmentMode &&
