@@ -6,7 +6,7 @@ import OptionsButton from './general/OptionsButton';
 
 const LocationItem = ({
   location,
-  selectLocation,
+  onSelect,
   showCategory,
   onEditClick,
   onDeleteClick,
@@ -22,7 +22,7 @@ const LocationItem = ({
       </div>
     }
     secondaryTextLines={showCategory ? 2 : 1}
-    onTouchTap={() => selectLocation(location)}
+    onTouchTap={() => onSelect(location)}
     rightIconButton={
       <IconMenu iconButtonElement={OptionsButton}>
         <MenuItem onTouchTap={() => onEditClick(location)}>
@@ -39,7 +39,7 @@ const LocationItem = ({
 LocationItem.propTypes = {
   showCategory: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  selectLocation: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
 };

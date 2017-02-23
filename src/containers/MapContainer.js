@@ -32,8 +32,8 @@ class MapContainer extends Component {
     locations.map(location => (
       {
         position: {
-          lat: location.latitude,
-          lng: location.longitude,
+          lat: parseInt(location.latitude, 10),
+          lng: parseInt(location.longitude, 10),
         },
         content: location.name,
         showInfo: false,
@@ -43,8 +43,8 @@ class MapContainer extends Component {
 
   center = selectedLocation => (
     {
-      lat: selectedLocation ? selectedLocation.latitude : 32,
-      lng: selectedLocation ? selectedLocation.longitude : 34,
+      lat: selectedLocation ? parseInt(selectedLocation.latitude, 10) : 32,
+      lng: selectedLocation ? parseInt(selectedLocation.longitude, 10) : 34,
     }
   )
 

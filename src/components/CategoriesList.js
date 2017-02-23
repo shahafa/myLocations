@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { Card } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
 import IconMenu from 'material-ui/IconMenu';
@@ -8,8 +8,6 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import LocalOfferIcon from 'material-ui/svg-icons/maps/local-offer';
 import { lightBlueA200 } from 'material-ui/styles/colors';
 import OptionsButton from './general/OptionsButton';
-import AddCategories from './AddCategories';
-import ConfirmDialog from './general/ConfirmDialog';
 
 const styles = {
   toolbar: {
@@ -37,7 +35,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: '50px',
-    marginBottom: '50px',
+    paddingBottom: '75px',
   },
 
   noCategoriesFoundIcon: {
@@ -52,140 +50,63 @@ const styles = {
   },
 };
 
-class CategoriesList extends Component {
-  static propTypes = {
-    categories: PropTypes.array.isRequired,
-    addCategory: PropTypes.func.isRequired,
-    deleteCategory: PropTypes.func.isRequired,
-    renameCategory: PropTypes.func.isRequired,
-  }
+const CategoriesList = ({
+  categories,
+  onAddCategoryClick,
+  onDeleteCategoryClick,
+}) => (
+  <Card>
+    <div style={styles.toolbar}>
+      <IconButton
+        style={styles.buttons}
+        onTouchTap={() => onAddCategoryClick('')}
+        tooltip="Add New Category"
+      >
+        <AddIcon color="white" />
+      </IconButton>
 
-  state = {
-    categoriesDialogOpen: false,
-    confirmDeleteDialogOpen: false,
-  };
+      <div style={styles.title}>Categories</div>
+    </div>
 
-  onCategoriesClick = (category) => {
-    this.setState({
-      categoriesDialogOpen: true,
-      categoriesDialogCategory: category,
-    });
-  }
-
-  onCategoriesDialogConfirm = (oldCategoryValue, newCategoryValue) => {
-    const { addCategory, renameCategory } = this.props;
-
-    if (oldCategoryValue !== '') {
-      renameCategory(oldCategoryValue, newCategoryValue);
-    } else {
-      addCategory(newCategoryValue);
+    {categories.length === 0 &&
+      <div style={styles.noCategoriesFound}>
+        <LocalOfferIcon style={styles.noCategoriesFoundIcon} />
+        <div style={styles.noCategoriesFoundTitle}>No categories, use the add button to add new category</div>
+      </div>
     }
 
-    this.setState({ categoriesDialogOpen: false });
-  }
-
-  onCategoriesDialogClose = () => {
-    this.setState({ categoriesDialogOpen: false });
-  }
-
-  onDeleteCategoryClick = (category) => {
-    this.setState({
-      confirmDeleteDialogOpen: true,
-      confirmDeleteDialogObject: category,
-      confirmDeleteDialogMessage: `Are you sure you want to delete category '${category}' ?`,
-    });
-  }
-
-  onDeleteDialogConfirm = (category) => {
-    const { deleteCategory } = this.props;
-    deleteCategory(category);
-
-    this.setState({ confirmDeleteDialogOpen: false });
-  }
-
-  onDeleteDialogClose = () => {
-    this.setState({ confirmDeleteDialogOpen: false });
-  }
-
-  render() {
-    const {
-      categories,
-    } = this.props;
-
-    const {
-      categoriesDialogOpen,
-      categoriesDialogCategory,
-      confirmDeleteDialogOpen,
-      confirmDeleteDialogMessage,
-      confirmDeleteDialogObject,
-    } = this.state;
-
-    return (
-      <div>
-        <Card>
-          <div style={styles.toolbar}>
-            <IconButton
-              style={styles.buttons}
-              onTouchTap={() => this.onCategoriesClick('')}
-              tooltip="Add New Category"
-            >
-              <AddIcon color="white" />
-            </IconButton>
-
-            <div style={styles.title}>Categories</div>
-          </div>
-
-          {categories.length === 0 &&
-            <div style={styles.noCategoriesFound}>
-              <LocalOfferIcon style={styles.noCategoriesFoundIcon} />
-              <div style={styles.noCategoriesFoundTitle}>No categories, use the add button to add new category</div>
-            </div>
-          }
-
-          <List>
-            {categories.sort().map(category =>
-              <ListItem
-                key={category}
-                primaryText={category}
-                disabled
-                rightIconButton={
-                  <IconMenu iconButtonElement={OptionsButton}>
-                    <MenuItem
-                      onTouchTap={() => this.onCategoriesClick(category)}
-                    >
-                      Edit
-                    </MenuItem>
-                    <MenuItem
-                      onTouchTap={() => this.onDeleteCategoryClick(category)}
-                    >
-                      Delete
-                    </MenuItem>
-                  </IconMenu>
-                }
-              />)
+    {categories.length !== 0 &&
+      <List>
+        {categories.sort().map(category =>
+          <ListItem
+            key={category}
+            primaryText={category}
+            disabled
+            rightIconButton={
+              <IconMenu iconButtonElement={OptionsButton}>
+                <MenuItem
+                  onTouchTap={() => onAddCategoryClick(category)}
+                >
+                  Edit
+                </MenuItem>
+                <MenuItem
+                  onTouchTap={() => onDeleteCategoryClick(category)}
+                >
+                  Delete
+                </MenuItem>
+              </IconMenu>
             }
-          </List>
-        </Card>
+          />)
+        }
+      </List>
+    }
+  </Card>
+);
 
-        <AddCategories
-          open={categoriesDialogOpen}
-          categories={categories}
-          category={categoriesDialogCategory}
-          onConfirm={this.onCategoriesDialogConfirm}
-          onClose={this.onCategoriesDialogClose}
-        />
-
-        <ConfirmDialog
-          open={confirmDeleteDialogOpen}
-          message={confirmDeleteDialogMessage}
-          object={confirmDeleteDialogObject}
-          ConfirmButtonText="Delete"
-          onConfirm={this.onDeleteDialogConfirm}
-          onClose={this.onDeleteDialogClose}
-        />
-      </div>
-    );
-  }
-}
+CategoriesList.propTypes = {
+  categories: PropTypes.array.isRequired,
+  onAddCategoryClick: PropTypes.func.isRequired,
+  onDeleteCategoryClick: PropTypes.func.isRequired,
+};
 
 export default CategoriesList;

@@ -5,10 +5,10 @@ import DevTools from '../containers/DevTools';
 
 let enhancer;
 if (process.env.NODE_ENV === 'production') {
-  enhancer = persistState(/*paths, config*/);
+  enhancer = persistState();
 } else {
   enhancer = compose(
-    persistState(/*paths, config*/),
+    persistState(),
     DevTools.instrument(),
   );
 }
