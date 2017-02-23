@@ -1,1 +1,1 @@
-myLocation
+myLocations
