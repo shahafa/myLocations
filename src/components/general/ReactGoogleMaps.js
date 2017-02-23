@@ -1,24 +1,31 @@
 import React from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
-const ReactGoogleMaps = withGoogleMap(props => (
+const ReactGoogleMaps = withGoogleMap(({
+  zoom,
+  center,
+  markers,
+  onMapClick,
+  onMarkerClick,
+  onMarkerClose,
+}) => (
   <GoogleMap
-    zoom={props.zoom}
-    center={props.center}
-    onClick={props.onMapClick}
+    zoom={zoom}
+    center={center}
+    onClick={onMapClick}
     defaultOptions={{
       streetViewControl: false,
       mapTypeControl: false,
     }}
   >
-    {props.markers.map(marker => (
+    {markers.map(marker => (
       <Marker
         {...marker}
-        onClick={() => props.onMarkerClick(marker)}
+        onClick={() => onMarkerClick(marker)}
       >
         {marker.showInfo && (
           <InfoWindow
-            onCloseClick={() => props.onMarkerClose(marker)}
+            onCloseClick={() => onMarkerClose(marker)}
           >
             <div>{marker.content}</div>
           </InfoWindow>

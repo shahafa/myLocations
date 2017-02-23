@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import DevTools from './DevTools';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import FooterContainer from './FooterContainer';
 
 const developmentMode = process.env.NODE_ENV === 'development';
 
@@ -16,7 +16,7 @@ const App = ({ children }) => (
     </main>
 
     <footer className="footer">
-      <Footer page={children} />
+      <FooterContainer page={children} />
     </footer>
 
     {developmentMode &&
